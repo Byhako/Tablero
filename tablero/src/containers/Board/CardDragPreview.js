@@ -2,13 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Card from './Cards/Card'
 
-const styles = {
-  display: 'inline-block',
-  transform: 'rotate(-7deg)',
-  WebkitTransform: 'rotate(-7deg)'
-}
-
 const CardDragPreview = (props) => {
+  let styles = {
+    transform: 'rotate(-7deg)',
+    WebkitTransform: 'rotate(-7deg)'
+  }
+
+    console.log('props',props)
+
   styles.width = `${props.card.clientWidth || 243}px`
   styles.height = `${props.card.clientHeight || 243}px`
 

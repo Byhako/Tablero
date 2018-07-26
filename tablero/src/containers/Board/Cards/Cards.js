@@ -4,7 +4,10 @@ import { DropTarget } from 'react-dnd'
 import { findDOMNode } from 'react-dom'
 
 import Card from './DraggableCard'
-import { CARD_HEIGHT, CARD_MARGIN, OFFSET_HEIGHT } from '../../../constants.js'
+
+const CARD_HEIGHT = 161;  // height of a single card(excluding marginBottom/paddingBottom)
+const CARD_MARGIN = 10;  // height of a marginBottom+paddingBottom
+const OFFSET_HEIGHT = 84; // height offset from the top of the page
 
 
 function getPlaceholderIndex(y, scrollY) {
@@ -21,7 +24,6 @@ function getPlaceholderIndex(y, scrollY) {
 
 const specs = {
   drop(props, monitor, component) {
-    console.log('specs-drop:',monitor.getItem())
     document.getElementById(monitor.getItem().id).style.display = 'block'
     const { placeholderIndex } = component.state
     const lastX = monitor.getItem().x
@@ -94,7 +96,6 @@ class Cards extends Component {
   render() {
     const { connectDropTarget, x, cards, isOver, canDrop } = this.props
     const { placeholderIndex } = this.state
-    console.log('placeholderIndex',placeholderIndex)
     let isPlaceHold = false
     let cardList = []
 

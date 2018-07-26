@@ -23,12 +23,10 @@ class Board extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(actions.getLists(5))
+    this.props.dispatch(actions.getLists(8))
   }
 
   startScrolling = (direction) => {
-    console.log('startScrolling', direction)
-    // if (!this.state.isScrolling) {
     switch (direction) {
       case 'toLeft':
         this.setState({ isScrolling: true }, this.scrollLeft())
@@ -58,19 +56,15 @@ class Board extends Component {
   }
   
   stopScrolling = () => {
-    console.log('stopScrolling')
     this.setState({ isScrolling: false }, clearInterval(this.scrollInterval))
   }
 
   moveCard = (lastX, lastY, nextX, nextY) => {
-    console.log('moveCard')
     this.props.dispatch(actions.moveCard(lastX, lastY, nextX, nextY))
   }
 
   moveList = (listId, nextX) => {
     const { lastX } = this.findList(listId)
-    console.log('moveList', lastX)
-
     this.props.dispatch(actions.moveList(lastX, nextX))
   }
 
@@ -86,10 +80,11 @@ class Board extends Component {
 
   render() {
     const { lists } = this.props
+    console.log('lists',lists[0])
     return (
       <main>
       <div style={{ height: '100%' }}>
-        <CustomDragLayer snapToGrid={false} />
+        <CustomDragLayer/>
         {lists.map((item, i) =>
           <CardsContainer
             key={item.id}
@@ -110,7 +105,6 @@ class Board extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('state',state)
   return {
     lists: state.lists
   }

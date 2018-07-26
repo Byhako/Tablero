@@ -5,7 +5,6 @@ import { DragLayer } from 'react-dnd'
 import CardDragPreview from './CardDragPreview'
 import snapToGrid from './snapToGrid'
 
-
 const layerStyles = {
   position: 'fixed',
   pointerEvents: 'none',
@@ -21,14 +20,16 @@ function getItemStyles(props) {
   }
 
   let { x, y } = currentOffset
+  let ix = initialOffset.x
+  let iy = initialOffset.y
 
-  // if (props.snapToGrid) {
-    x -= initialOffset.x
-    y -= initialOffset.y
-    [x, y] = snapToGrid(x, y)
-    x += initialOffset.x
-    y += initialOffset.y
-  // }
+  x -= ix
+  y -= iy
+
+  let array = snapToGrid(x, y)
+  [x,y] = array
+  x += ix
+  y += iy
 
   const transform = `translate(${x}px, ${y}px)`
   return {
@@ -45,20 +46,6 @@ function getItemStyles(props) {
   isDragging: monitor.isDragging()
 }))
 class CustomDragLayer extends Component {
-  static propTypes = {
-    item: PropTypes.object,
-    itemType: PropTypes.string,
-    initialOffset: PropTypes.shape({
-      x: PropTypes.number.isRequired,
-      y: PropTypes.number.isRequired
-    }),
-    currentOffset: PropTypes.shape({
-      x: PropTypes.number.isRequired,
-      y: PropTypes.number.isRequired
-    }),
-    isDragging: PropTypes.bool.isRequired,
-    snapToGrid: PropTypes.bool.isRequired
-  };
 
   renderItem(type, item) {
     switch (type) {
@@ -71,7 +58,7 @@ class CustomDragLayer extends Component {
 
   render() {
     const { item, itemType, isDragging } = this.props
-
+    console.log('item',item)
     if (!isDragging) { return null }
 
     return (
@@ -82,6 +69,19 @@ class CustomDragLayer extends Component {
       </div>
     );
   }
+}
+
+CustomDragLayer.propTypes = {
+  item: PropTypes.object,
+  itemType: PropTypes.string,
+  initialOffset: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired
+  }),
+  currentOffset: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired
+  })
 }
 
 export default CustomDragLayer

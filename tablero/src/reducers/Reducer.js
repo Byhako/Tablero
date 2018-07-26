@@ -13,12 +13,10 @@ function Reducer (state, action) {
 }
 
 function GET_LISTS_START (state, action) {
-  console.log('GET_LISTS_START')
   return {...state, isFetching: true}
 }
 
 function GET_LISTS (state, action) {
-  console.log('GET_LISTS',action)
   return {...state, isFetching: false, lists: action.lists}
 }
 
